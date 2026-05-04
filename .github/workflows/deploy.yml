@@ -1,0 +1,59 @@
+name: Deploy Slidev to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Slidev site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium para exportar
+        run: npx playwright install chromium --with-deps
+
+      - name: Exportar PDF y PPTX
+        run: npm run export:downloads
+
+      - name: Construir portal y semanas
+        run: npm run build:all
+
+      - name: Subir artefacto de GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy GitHub Pages
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Publicar en GitHub Pages
+        uses: actions/deploy-pages@v4
