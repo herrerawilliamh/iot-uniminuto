@@ -1,37 +1,3 @@
-:root {
-    --uni-azul: #233763;
-    --uni-amarillo: #f2b51b;
-    --uni-texto: #111111;
-
-    --font-title: "Merriweather Sans", Arial, sans-serif;
-    --font-body: "Atkinson Hyperlegible", Arial, sans-serif;
-    --font-accessible: "OpenDyslexic", Arial, sans-serif;
-}
-
-.slidev-layout {
-    font-family: var(--font-body);
-    color: var(--uni-texto);
-}
-
-.slidev-layout h1,
-.slidev-layout h2,
-.slidev-layout h3 {
-    font-family: var(--font-title);
-    font-weight: 800;
-}
-
-html.opendyslexic .slidev-layout,
-html.opendyslexic .slidev-layout h1,
-html.opendyslexic .slidev-layout h2,
-html.opendyslexic .slidev-layout h3,
-html.opendyslexic .slidev-layout p,
-html.opendyslexic .slidev-layout li,
-html.opendyslexic .slidev-layout div {
-    font-family: var(--font-accessible) !important;
-    letter-spacing: 0.02em;
-    line-height: 1.45;
-}
-
 /* =========================================================
    Bloques de código institucionales con scroll
    Se activa en la diapositiva con:
@@ -43,19 +9,21 @@ html.opendyslexic .slidev-layout div {
     margin-top: 0.5rem;
 }
 
-.codigo-slide pre.slidev-code {
+.codigo-slide pre,
+.codigo-slide pre.slidev-code,
+.codigo-slide .slidev-code {
     max-height: 430px !important;
     overflow: auto !important;
 
     background: #0f172a !important;
     color: #e5e7eb !important;
 
-    border: 1px solid rgba(242, 181, 27, 0.55);
+    border: 2px solid rgba(242, 181, 27, 0.75);
     border-radius: 18px;
 
     padding: 1rem 1.2rem !important;
 
-    font-size: 0.74rem !important;
+    font-size: 0.78rem !important;
     line-height: 1.45 !important;
 
     box-shadow:
@@ -63,47 +31,79 @@ html.opendyslexic .slidev-layout div {
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.codigo-slide pre.slidev-code code {
+.codigo-slide pre code,
+.codigo-slide pre.slidev-code code,
+.codigo-slide .slidev-code code {
     font-family:
         "Cascadia Code",
         "Fira Code",
         "JetBrains Mono",
         "Consolas",
         monospace !important;
+
+    color: #e5e7eb !important;
 }
 
-.codigo-slide pre.slidev-code .line {
+/* Evita que Slidev opaque líneas no resaltadas */
+.codigo-slide pre .line,
+.codigo-slide pre.slidev-code .line,
+.codigo-slide .slidev-code .line {
+    opacity: 1 !important;
+    filter: none !important;
     min-height: 1.45em;
 }
 
-.codigo-slide pre.slidev-code .line span {
+/* Evita que los tokens queden apagados */
+.codigo-slide pre .line span,
+.codigo-slide pre.slidev-code .line span,
+.codigo-slide .slidev-code .line span {
     opacity: 1 !important;
+    filter: none !important;
 }
 
-/* Números de línea */
-.codigo-slide pre.slidev-code .line-number,
-.codigo-slide pre.slidev-code .line-numbers {
+/* Comentarios */
+.codigo-slide pre .token.comment,
+.codigo-slide pre .token.prolog,
+.codigo-slide pre .token.doctype,
+.codigo-slide pre .token.cdata {
     color: #94a3b8 !important;
     opacity: 1 !important;
 }
 
+/* Números de línea */
+.codigo-slide pre .line-number,
+.codigo-slide pre .line-numbers,
+.codigo-slide pre.slidev-code .line-number,
+.codigo-slide pre.slidev-code .line-numbers {
+    color: #cbd5e1 !important;
+    opacity: 1 !important;
+}
+
 /* Scrollbar */
-.codigo-slide pre.slidev-code::-webkit-scrollbar {
+.codigo-slide pre::-webkit-scrollbar,
+.codigo-slide pre.slidev-code::-webkit-scrollbar,
+.codigo-slide .slidev-code::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
 
-.codigo-slide pre.slidev-code::-webkit-scrollbar-track {
+.codigo-slide pre::-webkit-scrollbar-track,
+.codigo-slide pre.slidev-code::-webkit-scrollbar-track,
+.codigo-slide .slidev-code::-webkit-scrollbar-track {
     background: #1e293b;
     border-radius: 999px;
 }
 
-.codigo-slide pre.slidev-code::-webkit-scrollbar-thumb {
+.codigo-slide pre::-webkit-scrollbar-thumb,
+.codigo-slide pre.slidev-code::-webkit-scrollbar-thumb,
+.codigo-slide .slidev-code::-webkit-scrollbar-thumb {
     background: var(--uni-amarillo);
     border-radius: 999px;
     border: 2px solid #1e293b;
 }
 
-.codigo-slide pre.slidev-code::-webkit-scrollbar-thumb:hover {
+.codigo-slide pre::-webkit-scrollbar-thumb:hover,
+.codigo-slide pre.slidev-code::-webkit-scrollbar-thumb:hover,
+.codigo-slide .slidev-code::-webkit-scrollbar-thumb:hover {
     background: #ffcc33;
 }
