@@ -1,25 +1,53 @@
-import { existsSync, mkdirSync } from "node:fs";
-import { execSync } from "node:child_process";
+import fs from "node:fs";
+import { spawnSync } from "node:child_process";
+import { decks } from "./decks.mjs";
 
-mkdirSync("public/descargas", { recursive: true });
+const isWindows = process.platform === "win32";
 
-function run(command) {
-  console.log(`\n> ${command}\n`);
-  execSync(command, { stdio: "inherit" });
-}
+fs.mkdirSync("public/descargas", { recursive: true });
 
-function exportDeck(input, outputName) {
-  if (!existsSync(input)) {
-    console.log(`No existe ${input}. Se omite.`);
-    return;
+const commonExportOptions = [
+  "--timeout",
+  "120000",
+  "--wait",
+  "3000",
+  "--wait-until",
+  "none",
+];
+
+function run(args) {
+  const result = spawnSync("npx", ["slidev", "export", ...args], {
+    stdio: "inherit",
+    shell: isWindows,
+  });
+
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
   }
-
-  run(`npx slidev export ${input} --format pdf --output public/descargas/${outputName}.pdf`);
-  run(`npx slidev export ${input} --format pptx --with-clicks false --output public/descargas/${outputName}.pptx`);
 }
 
-exportDeck("slides.md", "openclass-iot");
+for (const deck of decks.filter((deck) => deck.exportable)) {
+  console.log(`\nExportando PDF: ${deck.name}`);
 
-for (let i = 1; i <= 8; i++) {
-  exportDeck(`iot_semana${i}.md`, `iot_semana${i}`);
+  run([
+    deck.entry,
+    "--format",
+    "pdf",
+    ...commonExportOptions,
+    "--output",
+    `public/descargas/${deck.name}.pdf`,
+  ]);
+
+  console.log(`\nExportando PPTX: ${deck.name}`);
+
+  run([
+    deck.entry,
+    "--format",
+    "pptx",
+    "--with-clicks",
+    "false",
+    ...commonExportOptions,
+    "--output",
+    `public/descargas/${deck.name}.pptx`,
+  ]);
 }

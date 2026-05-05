@@ -1,34 +1,31 @@
-import { existsSync, rmSync } from "node:fs";
-import { execSync } from "node:child_process";
+import fs from "node:fs";
+import { spawnSync } from "node:child_process";
+import { decks } from "./decks.mjs";
 
-const repo = process.env.GITHUB_REPOSITORY
-  ? process.env.GITHUB_REPOSITORY.split("/")[1]
-  : "";
+const isWindows = process.platform === "win32";
 
-const isGitHubActions = Boolean(process.env.GITHUB_ACTIONS);
-const baseRoot = isGitHubActions && repo ? `/${repo}/` : "/";
+fs.rmSync("dist", { recursive: true, force: true });
 
-function run(command) {
-  console.log(`\n> ${command}\n`);
-  execSync(command, { stdio: "inherit" });
-}
+function run(args) {
+  const result = spawnSync("npx", ["slidev", "build", ...args], {
+    stdio: "inherit",
+    shell: isWindows,
+  });
 
-rmSync("dist", { recursive: true, force: true });
-
-if (existsSync("slides.md")) {
-  run(`npx slidev build slides.md --out dist --base ${baseRoot} --without-notes`);
-}
-
-for (let i = 1; i <= 8; i++) {
-  const file = `iot_semana${i}.md`;
-  const out = `dist/semanas/iot_semana${i}`;
-  const base = `${baseRoot}semanas/iot_semana${i}/`;
-
-  if (existsSync(file)) {
-    run(`npx slidev build ${file} --out ${out} --base ${base} --without-notes`);
-  } else {
-    console.log(`No existe ${file}. Se omite la construcción de la semana ${i}.`);
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
   }
 }
 
-run(`node -e "require('fs').writeFileSync('dist/.nojekyll','')"`);
+for (const deck of decks) {
+  console.log(`\nConstruyendo: ${deck.name}`);
+
+  run([
+    deck.entry,
+    "--out",
+    deck.out,
+    "--base",
+    deck.base,
+    "--without-notes",
+  ]);
+}
