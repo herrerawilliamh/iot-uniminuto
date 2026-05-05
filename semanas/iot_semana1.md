@@ -541,10 +541,10 @@ class: codigo-slide
 ---
 
 ::title::
-Código completo en MicroPython
+Código 1: configuración de hardware
 
 ::content::
-```python {none}{lines:true,maxHeight:'430px'}
+```python {lines:true,maxHeight:'430px'}
 # Semana 1 - Internet de las cosas
 # Práctica: Semáforo ambiental IoT local
 # Plataforma: ESP32 en Wokwi
@@ -567,7 +567,23 @@ sensor = dht.DHT22(Pin(PIN_DHT))
 led_verde = Pin(PIN_LED_VERDE, Pin.OUT)
 led_amarillo = Pin(PIN_LED_AMARILLO, Pin.OUT)
 led_rojo = Pin(PIN_LED_ROJO, Pin.OUT)
+```
 
+<!--
+Notas del presentador:
+Explicar que en este primer bloque se importan las librerías necesarias y se definen los pines del ESP32. Reforzar que los números de GPIO del código deben coincidir con las conexiones realizadas en Wokwi. Señalar que el sensor DHT22 usa el pin 15 y que los LED representan los tres estados del ambiente.
+-->
+
+---
+layout: slide-08-titulo-texto
+class: codigo-slide
+---
+
+::title::
+Código 2: funciones auxiliares
+
+::content::
+```python {lines:true,maxHeight:'430px'}
 # -----------------------------
 # Funciones auxiliares
 # -----------------------------
@@ -603,7 +619,23 @@ def enviar_telemetria(temperatura, humedad, estado, mensaje):
     print('  "mensaje": "' + mensaje + '"')
     print("}")
     print("-" * 45)
+```
 
+<!--
+Notas del presentador:
+Explicar que estas funciones organizan el programa para que sea más claro. La función apagar_leds evita que queden varios LED encendidos al mismo tiempo. La función clasificar_ambiente toma decisiones a partir de temperatura y humedad. La función mostrar_estado activa el LED correspondiente. La función enviar_telemetria muestra en consola los datos como si fueran enviados a un tablero IoT.
+-->
+
+---
+layout: slide-08-titulo-texto
+class: codigo-slide
+---
+
+::title::
+Código 3: ciclo principal
+
+::content::
+```python {lines:true,maxHeight:'430px'}
 # -----------------------------
 # Programa principal
 # -----------------------------
@@ -634,7 +666,7 @@ while True:
 
 <!--
 Notas del presentador:
-Explicar el código por bloques: importación de librerías, configuración de pines, funciones auxiliares, clasificación ambiental y ciclo principal. Aclarar que la salida por consola representa una telemetría básica. En una versión posterior, estos datos podrían enviarse a una plataforma IoT real.
+Explicar que el ciclo while True mantiene activo el sistema IoT. En cada repetición se mide temperatura y humedad, se clasifica el estado ambiental, se enciende el LED correspondiente y se muestra la telemetría en consola. El bloque try except permite manejar errores de lectura del sensor sin detener completamente el programa.
 -->
 
 ---
