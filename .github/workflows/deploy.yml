@@ -38,9 +38,11 @@ jobs:
 
       - name: Exportar PDF y PPTX
         run: npm run export:downloads
-
+        
       - name: Construir portal y semanas
         run: npm run build:all
+        env:
+          SITE_BASE: /iot-uniminuto/
 
       - name: Subir artefacto de GitHub Pages
         uses: actions/upload-pages-artifact@v5
