@@ -1,263 +1,253 @@
 # OpenClass IoT · Presentaciones Slidev
 
-Repositorio para diseñar, organizar, exportar y publicar presentaciones académicas de Open Class usando **Slidev**, una plantilla institucional personalizada y archivos Markdown reutilizables por semana.
-
-El proyecto está pensado para sesiones universitarias de 90 minutos, con una presentación web navegable, archivos descargables y publicación automática en GitHub Pages.
+Presentaciones académicas semanales del curso **Internet de las cosas**, construidas con [Slidev](https://sli.dev), una plantilla institucional UNIMINUTO y Markdown por semana. El sitio completo se publica automáticamente en GitHub Pages.
 
 ---
 
-## 1. Propósito
+## Secciones
 
-Este repositorio permite:
-
-- Mantener una plantilla institucional estable.
-- Crear un portal principal del curso.
-- Trabajar cada semana como una presentación independiente.
-- Compilar el curso completo como sitio estático.
-- Exportar presentaciones a PDF y PPTX.
-- Publicar el sitio en GitHub Pages.
-- Activar progresivamente solo las semanas listas.
-- Evitar errores de rutas, diapositivas blancas y exportaciones fallidas.
+- [Arquitectura del proyecto](#arquitectura-del-proyecto)
+- [Estructura de carpetas](#estructura-de-carpetas)
+- [Instalacion](#instalacion)
+- [Comandos principales](#comandos-principales)
+- [Flujo de trabajo semana a semana](#flujo-de-trabajo-semana-a-semana)
+- [Control de semanas activas](#control-de-semanas-activas)
+- [Layouts disponibles](#layouts-disponibles)
+- [Uso de slots](#uso-de-slots)
+- [Bloques de codigo](#bloques-de-codigo)
+- Recursos publicos
+- [Notas del presentador](#notas-del-presentador)
+- [Publicacion en GitHub Pages](#publicacion-en-github-pages)
+- [Plantilla para nuevos cursos](#plantilla-para-nuevos-cursos)
+- [Solucion de problemas](#solucion-de-problemas)
+- [Reglas y buenas practicas](#reglas-y-buenas-practicas)
 
 ---
 
-## 2. Arquitectura del proyecto
+## Arquitectura del proyecto
 
 El proyecto usa tres niveles de archivos Markdown:
 
-```txt
-slides.md                 → Portal principal del curso
-iot_semanaN.md            → Lanzador raíz de cada semana
-semanas/iot_semanaN.md    → Contenido real de cada presentación
+```text
+slides.md                →  Portal principal del curso (home)
+iot_semanaN.md           →  Lanzador raíz de cada semana
+semanas/iot_semanaN.md   →  Contenido real de la presentación
 ```
 
-La regla central es:
-
-```txt
-slides.md funciona como portal.
-iot_semanaN.md importa una semana.
-semanas/iot_semanaN.md contiene las diapositivas reales.
-```
-
-Esto permite que los recursos públicos, fondos, imágenes, videos y estilos funcionen correctamente desde `public/`.
+Esta separación permite que los recursos públicos (fondos, imágenes, videos) funcionen correctamente desde `public/` y que cada semana se pueda construir, exportar y servir de forma independiente.
 
 ---
 
-## 3. Estructura recomendada
+## Estructura de carpetas
 
-```txt
+```text
 openclass-iot/
-├─ slides.md
-├─ iot_semana1.md
-├─ iot_semana2.md
-├─ iot_semana3.md
-├─ iot_semana4.md
-├─ iot_semana5.md
-├─ iot_semana6.md
-├─ iot_semana7.md
-├─ iot_semana8.md
-├─ semanas/
-│  ├─ iot_semana1.md
-│  ├─ iot_semana2.md
-│  ├─ iot_semana3.md
-│  ├─ iot_semana4.md
-│  ├─ iot_semana5.md
-│  ├─ iot_semana6.md
-│  ├─ iot_semana7.md
-│  └─ iot_semana8.md
-├─ public/
-│  ├─ fondos/
-│  ├─ imagenes/
-│  ├─ videos/
-│  └─ descargas/
-├─ scripts/
-│  ├─ decks.mjs
-│  ├─ build-site.mjs
-│  └─ export-downloads.mjs
-├─ theme/
-│  └─ uniminuto/
-│     ├─ package.json
-│     ├─ components/
-│     ├─ layouts/
-│     └─ styles/
-├─ .github/
-│  └─ workflows/
-│     └─ deploy.yml
-├─ package.json
-├─ package-lock.json
-├─ .gitignore
-└─ README.md
+├── slides.md                     ← Portal del curso
+├── iot_semana1.md                ← Lanzador semana 1
+├── iot_semana2.md
+├── ...
+├── iot_semana8.md
+│
+├── semanas/
+│   ├── iot_semana1.md            ← Contenido real semana 1
+│   ├── iot_semana2.md
+│   └── iot_semana3.md
+│
+├── public/
+│   ├── favicon.png               ← Favicon del sitio
+│   ├── fondos/                   ← Imágenes de fondo de diapositivas
+│   ├── imagenes/                 ← Imágenes del curso
+│   ├── videos/                   ← Videos del curso
+│   └── descargas/                ← PDFs y PPTXs generados
+│
+├── scripts/
+│   ├── decks.mjs                 ← Control central de semanas activas
+│   ├── build-site.mjs            ← Construye todas las semanas
+│   ├── build-incremental.mjs     ← Construye solo semanas nuevas
+│   ├── export-downloads.mjs      ← Exporta PDF y PPTX de todo
+│   ├── export-incremental.mjs    ← Exporta solo semanas nuevas
+│   ├── dev-all.mjs               ← Lanza todos los servidores dev
+│   ├── publicar.mjs              ← Commit + push a GitHub
+│   ├── nuevo-curso.mjs           ← CLI para configurar un nuevo curso
+│   └── zip-template.mjs          ← Genera la plantilla reutilizable
+│
+├── theme/
+│   └── uniminuto/
+│       ├── components/           ← AutoFitText, Counter, FontToggle
+│       ├── layouts/              ← 13 layouts institucionales
+│       └── styles/               ← CSS base y fuentes
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml            ← CI/CD a GitHub Pages
+│
+├── openclass-template.zip        ← Plantilla para nuevos cursos
+├── package.json
+└── .gitignore
 ```
 
 ---
 
-## 4. Rol de cada archivo Markdown
+## Instalacion
 
-### 4.1. `slides.md`
-
-Es el portal principal del curso.
-
-Debe incluir:
-
-- Portada del curso.
-- Descripción general.
-- Ruta de aprendizaje.
-- Enlaces a las semanas disponibles.
-- Enlaces de descarga a PDF o PPTX.
-
-Ejemplo de inicio correcto:
-
-```md
----
-theme: uniminuto
-title: Internet de las cosas — Open Class
-transition: fade
-routerMode: hash
-drawings:
-  persist: false
-layout: slide-01-portada
----
-
-::title::
-Internet de las cosas
-
-::week::
-Open Class
-
-::date::
-2026
+```powershell
+npm install
 ```
 
-No se debe crear una diapositiva vacía antes de la portada.
+Si hay conflictos o errores:
 
----
-
-### 4.2. `iot_semanaN.md`
-
-Son los lanzadores raíz.
-
-Ejemplo:
-
-```txt
-iot_semana1.md
+```powershell
+Remove-Item -Recurse -Force .\node_modules -ErrorAction SilentlyContinue
+Remove-Item -Force .\package-lock.json -ErrorAction SilentlyContinue
+npm install
 ```
 
-Contenido recomendado:
+---
 
-```md
+## Comandos principales
+
+### Desarrollo con hot-reload
+
+| Comando | Que hace | Puerto |
+| --- | --- | --- |
+| `npm run dev` | Abre el portal | 3000 |
+| `npm run dev:s1` | Abre semana 1 con hot-reload | 3001 |
+| `npm run dev:s2` | Abre semana 2 con hot-reload | 3002 |
+| `npm run dev:s3` | Abre semana 3 con hot-reload | 3003 |
+| `npm run dev:todo` | Abre portal + todas las semanas activas en paralelo | 3000-300N |
+
+> **Nota:** En modo `dev`, los enlaces del portal a las semanas no funcionan porque cada presentación corre en un puerto distinto. Para navegación completa entre semanas, usar `npm run vista`.
+
 ---
-theme: uniminuto
-title: Internet de las cosas — Semana 1
-transition: fade
-routerMode: hash
-drawings:
-  persist: false
-src: ./semanas/iot_semana1.md
+
+### Previsualizacion completa
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run vista` | Limpia, exporta PDFs/PPTXs, construye todo y abre el navegador en el portal |
+| `npm run preview:static` | Construye todo y sirve sin exportar PDFs |
+
 ---
+
+### Construccion
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run build:all` | Reconstruye todo desde cero |
+| `npm run build:incremental` | Construye solo las semanas que aún no están en `dist/` |
+
+---
+
+### Exportacion de descargas
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run export:downloads` | Exporta PDF y PPTX de todas las semanas activas |
+| `npm run export:incremental` | Exporta solo las semanas sin archivos en `public/descargas/` |
+
+---
+
+### Publicacion en GitHub
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run publicar` | `git add -A` → commit con fecha → `git push` |
+
+Al hacer push, el CI/CD de GitHub Actions construye y despliega el sitio automáticamente.
+
+---
+
+### Limpieza
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run clean` | Elimina la carpeta `dist/` |
+| `npm run clean:downloads` | Elimina los archivos en `public/descargas/` |
+| `npm run clean:cache` | Elimina caché de Slidev y Vite |
+
+---
+
+### Plantilla
+
+| Comando | Que hace |
+| --- | --- |
+| `npm run nuevo` | CLI interactivo para configurar el curso desde la plantilla |
+| `npm run zip:template` | Genera `openclass-template.zip` con los últimos cambios |
+
+---
+
+## Flujo de trabajo semana a semana
+
+### Cuando empiezas una semana nueva
+
+1. Crea el contenido en `semanas/iot_semanaN.md`.
+2. Prueba localmente con `npm run dev:sN`.
+3. Activa la semana en `scripts/decks.mjs` (ver sección siguiente).
+4. Publica con `npm run publicar`.
+
+### Cuando ya hay semanas anteriores publicadas
+
+Solo genera la semana nueva sin reconstruir todo:
+
+```powershell
+npm run export:incremental
+npm run build:incremental
+npm run publicar
 ```
 
-Este archivo no debe tener diapositivas adicionales. Solo importa el contenido real ubicado en `semanas/`.
+### Para forzar una reconstruccion completa
 
----
-
-### 4.3. `semanas/iot_semanaN.md`
-
-Contiene la presentación real de cada semana.
-
-Debe iniciar directamente con un layout:
-
-```md
----
-layout: slide-01-portada
----
-
-::title::
-Internet de las cosas
-
-::week::
-Semana 1
-
-::date::
-Mayo 04, 2026
+```powershell
+npm run vista
 ```
 
-No debe incluir configuración global como:
-
-```md
-theme:
-title:
-transition:
-routerMode:
-drawings:
-```
-
-Esa configuración pertenece únicamente al lanzador raíz.
+Limpia, exporta todo, construye todo y abre el navegador.
 
 ---
 
-## 5. Fuente de control de semanas
+## Control de semanas activas
 
-El archivo más importante para construir y exportar el sitio es:
-
-```txt
-scripts/decks.mjs
-```
-
-Allí se define qué presentaciones están activas, cuáles se construyen y cuáles se exportan.
-
-Ejemplo recomendado:
+El archivo `scripts/decks.mjs` es la fuente de verdad. Solo las semanas listadas aquí se construyen y exportan.
 
 ```js
 export const decks = [
   {
-    id: "openclass-iot",
-    title: "Portal principal",
+    name: "openclass-iot",
     entry: "slides.md",
     out: "dist",
-    route: "",
-    enabled: true,
+    base: SITE_BASE,
     exportable: true,
-    formats: ["pdf", "pptx"],
   },
   {
-    id: "iot_semana1",
-    title: "Semana 1",
+    name: "iot_semana1",
     entry: "iot_semana1.md",
     out: "dist/semanas/iot_semana1",
-    route: "semanas/iot_semana1/",
-    enabled: true,
+    base: withBase("semanas/iot_semana1/"),
     exportable: true,
-    formats: ["pdf", "pptx"],
   },
-  {
-    id: "iot_semana2",
-    title: "Semana 2",
-    entry: "iot_semana2.md",
-    out: "dist/semanas/iot_semana2",
-    route: "semanas/iot_semana2/",
-    enabled: false,
-    exportable: false,
-    formats: ["pdf"],
-  },
+  // Agrega aquí cada semana cuando el contenido esté listo.
 ];
 ```
 
-Para publicar una nueva semana:
+Para activar la semana 4, agrega este bloque antes del comentario final:
 
-1. Revisar que la semana funcione localmente.
-2. Cambiar `enabled` a `true`.
-3. Cambiar `exportable` a `true` solo si también debe generar PDF o PPTX.
-4. Hacer commit y push.
+```js
+{
+  name: "iot_semana4",
+  entry: "iot_semana4.md",
+  out: "dist/semanas/iot_semana4",
+  base: withBase("semanas/iot_semana4/"),
+  exportable: true,
+},
+```
 
-Esto evita que una semana incompleta detenga todo el despliegue.
+`dev:todo` también se actualiza automáticamente: lee `decks.mjs` y lanza un servidor por cada semana activa.
 
 ---
 
-## 6. Layouts disponibles
+## Layouts disponibles
 
-La plantilla institucional incluye estos layouts:
-
-```txt
+```text
 slide-01-portada
 slide-02-titulo
 slide-03-imagen-izquierda
@@ -270,121 +260,106 @@ slide-09-objetivos
 slide-10-titulo-dos-columnas
 slide-11-dos-titulos-dos-columnas
 slide-12-cierre
+slide-codigo
 ```
 
-Nombres correctos:
-
-```txt
-slide-08-titulo-texto
-slide-09-objetivos
-```
-
-No usar:
-
-```txt
-slide-08-objetivos
-slide-09-titulo-texto
-```
+Los nombres de layout son exactos. Usar el nombre equivocado provoca `Unknown layout`.
 
 ---
 
-## 7. Uso correcto de slots
+## Uso de slots
 
-Los layouts personalizados usan slots de Slidev.
+Los layouts reciben contenido a través de slots con la sintaxis `::nombre::`. **No se cierran** los slots con `::`.
 
-Ejemplo:
-
-```md
-::title::
-Título de la diapositiva
-
-::content::
-Contenido de la diapositiva.
-```
-
-No se deben cerrar los slots con `::`.
-
-Incorrecto:
+### Portada — slide-01-portada
 
 ```md
-::title::
-Título de la diapositiva
-::
-```
-
-Correcto:
-
-```md
-::title::
-Título de la diapositiva
-```
-
+---
+layout: slide-01-portada
 ---
 
-## 8. Slots por layout
-
-### Portada
-
-```md
 ::title::
-Nombre del curso
+Internet de las cosas
 
 ::week::
-Semana 1
+Semana 1 — Introducción a IoT
 
 ::date::
-Mayo 04, 2026
+Mayo 4 de 2026
 ```
 
-### Título y contenido
+### Titulo y texto — slide-08-titulo-texto y slide-09-objetivos
 
 ```md
+---
+layout: slide-08-titulo-texto
+---
+
 ::title::
 Título de la diapositiva
 
 ::content::
 Contenido de la diapositiva.
+
+- Punto uno.
+- Punto dos.
 ```
 
-### Imagen
+### Imagen izquierda o derecha — slide-05 y slide-06
 
 ```md
+---
+layout: slide-05-titulo-superior-texto-derecha
+---
+
 ::title::
-Título de la diapositiva
+Título
 
 ::image::
-<img src="/imagenes/favicon.png" alt="Descripción de la imagen" />
+<img src="/imagenes/nombre.png" alt="Descripción" />
 
 ::content::
-Texto de apoyo.
+Texto de apoyo a la imagen.
 ```
 
-### Video o multimedia
+### Video — slide-07-multimedia-con-titulo
 
 ```md
+---
+layout: slide-07-multimedia-con-titulo
+---
+
 ::title::
 Video de apoyo
 
 ::media::
-<iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/ID" allowfullscreen></iframe>
 ```
 
-### Dos columnas
+### Dos columnas — slide-10-titulo-dos-columnas
 
 ```md
+---
+layout: slide-10-titulo-dos-columnas
+---
+
 ::title::
 Título general
 
 ::left::
-Contenido de la columna izquierda.
+Contenido columna izquierda.
 
 ::right::
-Contenido de la columna derecha.
+Contenido columna derecha.
 ```
 
-### Dos títulos y dos columnas
+### Dos titulos y dos columnas — slide-11-dos-titulos-dos-columnas
 
 ```md
+---
+layout: slide-11-dos-titulos-dos-columnas
+---
+
 ::leftTitle::
 Título izquierdo
 
@@ -398,360 +373,170 @@ Contenido izquierdo.
 Contenido derecho.
 ```
 
+### Cierre — slide-12-cierre
+
+```md
+---
+layout: slide-12-cierre
 ---
 
-## 9. Recursos públicos
-
-Los recursos deben ubicarse dentro de `public/`.
-
-Ejemplos:
-
-```txt
-public/fondos/slide-01-portada.png
-public/imagenes/favicon.png
-public/videos/test.mp4
-public/descargas/
-```
-
-Desde Markdown o Vue se referencian así:
-
-```html
-<img src="/imagenes/favicon.png" alt="Descripción de la imagen" />
-<img src="/fondos/slide-01-portada.png" alt="Fondo institucional" />
-<video src="/videos/test.mp4" controls></video>
-```
-
-No usar rutas como:
-
-```txt
-../public/imagenes/favicon.png
-/public/imagenes/favicon.png
-./imagenes/favicon.png
-../imagenes/favicon.png
+::message::
+¡Hasta la próxima sesión!
 ```
 
 ---
 
-## 10. Enlaces desde el portal
+## Bloques de codigo
 
-Desde `slides.md`, los enlaces a semanas deben usar rutas relativas:
+Para diapositivas con bloques de código extenso usa el layout dedicado `slide-codigo`. Está diseñado para maximizar el espacio del área de código: fondo oscuro, borde amarillo, scroll interno y botón de copiar al pasar el cursor.
 
-```html
-<a href="./semanas/iot_semana1/#/1" target="_self">Semana 1 · Generalidades de IoT</a>
-```
-
-No usar:
-
-```txt
-iot_semana1.md
-/semanas/iot_semana1/
-semanas/iot_semana1/index.html
-```
-
-Para descargas desde el portal:
-
-```html
-<a href="./descargas/iot_semana1.pdf" target="_blank">Descargar PDF Semana 1</a>
-<a href="./descargas/iot_semana1.pptx" target="_blank">Descargar PPTX Semana 1</a>
-```
-
-Usar rutas relativas ayuda a que el sitio funcione tanto en local como en GitHub Pages.
-
----
-
-## 11. Instalación
-
-Instalar dependencias:
-
-```powershell
-npm install
-```
-
-Si hay problemas de instalación:
-
-```powershell
-Remove-Item -Recurse -Force .\node_modules -ErrorAction SilentlyContinue
-Remove-Item -Force .\package-lock.json -ErrorAction SilentlyContinue
-npm install
-```
-
-En GitHub Actions se usa:
-
-```bash
-npm ci
-```
-
-Por eso es importante mantener actualizado `package-lock.json`.
-
----
-
-## 12. Comandos principales
-
-### Ver todo el sitio localmente
-
-```powershell
-npm run dev
-```
-
-Este comando debe generar descargas, construir el sitio y servirlo en:
-
-```txt
-http://127.0.0.1:4173/
-```
-
-### Editar el portal
-
-```powershell
-npm run edit:index
-```
-
-### Editar una semana
-
-```powershell
-npm run edit:s1
-npm run edit:s2
-npm run edit:s3
-npm run edit:s4
-npm run edit:s5
-npm run edit:s6
-npm run edit:s7
-npm run edit:s8
-```
-
-### Construir el sitio
-
-```powershell
-npm run build:all
-```
-
-### Exportar descargas
-
-```powershell
-npm run export:downloads
-```
-
-### Construir y servir sin exportar
-
-```powershell
-npm run preview:static
-```
-
-### Exportar, construir y servir
-
-```powershell
-npm run preview:pages
-```
-
----
-
-## 13. `package.json` recomendado
-
-La sección de scripts debería funcionar así:
-
-```json
-{
-  "scripts": {
-    "dev": "npm run preview:pages",
-
-    "edit:index": "slidev slides.md --open --port 3000",
-    "edit:s1": "slidev iot_semana1.md --open --port 3001",
-    "edit:s2": "slidev iot_semana2.md --open --port 3002",
-    "edit:s3": "slidev iot_semana3.md --open --port 3003",
-    "edit:s4": "slidev iot_semana4.md --open --port 3004",
-    "edit:s5": "slidev iot_semana5.md --open --port 3005",
-    "edit:s6": "slidev iot_semana6.md --open --port 3006",
-    "edit:s7": "slidev iot_semana7.md --open --port 3007",
-    "edit:s8": "slidev iot_semana8.md --open --port 3008",
-
-    "dev:s1": "npm run edit:s1",
-    "dev:s2": "npm run edit:s2",
-    "dev:s3": "npm run edit:s3",
-    "dev:s4": "npm run edit:s4",
-    "dev:s5": "npm run edit:s5",
-    "dev:s6": "npm run edit:s6",
-    "dev:s7": "npm run edit:s7",
-    "dev:s8": "npm run edit:s8",
-
-    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
-    "clean:downloads": "node -e \"require('fs').rmSync('public/descargas',{recursive:true,force:true})\"",
-    "clean:cache": "node -e \"require('fs').rmSync('.slidev',{recursive:true,force:true}); require('fs').rmSync('node_modules/.vite',{recursive:true,force:true})\"",
-
-    "build:all": "node scripts/build-site.mjs",
-    "export:downloads": "node scripts/export-downloads.mjs",
-
-    "preview:static": "npm run build:all && http-server dist -p 4173 -c-1",
-    "preview:pages": "npm run export:downloads && npm run build:all && http-server dist -p 4173 -c-1"
-  }
-}
-```
-
----
-
-## 14. Exportación a PDF y PPTX
-
-La exportación se controla desde:
-
-```txt
-scripts/export-downloads.mjs
-```
-
-Los archivos generados quedan en:
-
-```txt
-public/descargas/
-```
-
-Luego, al construir el sitio, Slidev copia esos archivos hacia:
-
-```txt
-dist/descargas/
-```
-
-Advertencia importante:
-
-- El PDF es útil para estudiantes.
-- El PPTX generado por Slidev puede no ser editable como texto.
-- Antes de publicar un PPTX, revisar que no incluya notas o información interna que no deba compartirse.
-
-Para publicar solo PDF en una semana, usar:
-
-```js
-formats: ["pdf"]
-```
-
-Para publicar PDF y PPTX:
-
-```js
-formats: ["pdf", "pptx"]
-```
-
----
-
-## 15. Publicación en GitHub Pages
-
-El despliegue se hace mediante GitHub Actions.
-
-Archivo:
-
-```txt
-.github/workflows/deploy.yml
-```
-
-Versión recomendada:
+El frontmatter del slide:
 
 ```yaml
-name: Deploy Slidev to GitHub Pages
+---
+layout: slide-codigo
+---
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+::title::
+Código completo en MicroPython
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
-jobs:
-  build:
-    name: Build Slidev site
-    runs-on: ubuntu-latest
-
-    env:
-      SITE_BASE: /${{ github.event.repository.name }}/
-
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v5
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Instalar dependencias
-        run: npm ci
-
-      - name: Instalar Chromium para exportar
-        run: npx playwright install chromium --with-deps
-
-      - name: Exportar PDF y PPTX
-        run: npm run export:downloads
-
-      - name: Construir portal y semanas
-        run: npm run build:all
-
-      - name: Preparar GitHub Pages
-        run: touch dist/.nojekyll
-
-      - name: Subir artefacto de GitHub Pages
-        uses: actions/upload-pages-artifact@v5.0.0
-        with:
-          path: dist
-          include-hidden-files: true
-
-  deploy:
-    name: Deploy GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Publicar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5.0.0
+::content::
 ```
 
-En GitHub, configurar:
+El bloque de código en el slot `::content::`:
 
-```txt
+```python
+# {lines:true} activa numeración de líneas
+from machine import Pin
+from time import sleep
+
+led = Pin(2, Pin.OUT)
+
+while True:
+    led.on()
+    sleep(1)
+    led.off()
+    sleep(1)
+```
+
+El **botón de copiar** aparece en la esquina superior derecha del bloque al pasar el cursor. Está habilitado con `codeCopy: true` en el frontmatter de cada lanzador (`iot_semanaN.md`) y del portal (`slides.md`).
+
+---
+
+## Recursos publicos
+
+Todos los recursos estáticos van dentro de `public/`. Se referencian con rutas absolutas desde la raíz:
+
+```html
+<img src="/imagenes/nombre.png" alt="Descripción" />
+<img src="/fondos/slide-01-portada.png" alt="Fondo" />
+<video src="/videos/demo.mp4" controls></video>
+```
+
+No usar rutas relativas como `../public/`, `./imagenes/` o `/public/imagenes/`.
+
+### Fondos de diapositivas
+
+```text
+public/fondos/slide-01-portada.png
+public/fondos/slide-02-titulo.png
+public/fondos/slide-03-imagen-izquierda.png
+public/fondos/slide-04-imagen-derecha.png
+public/fondos/slide-05-template.png
+public/fondos/slide-06-cierre.png
+```
+
+### Favicon
+
+El favicon se carga desde `public/favicon.png`. Está configurado en el frontmatter de cada archivo lanzador:
+
+```yaml
+favicon: /favicon.png
+```
+
+Para cambiar el favicon, reemplaza `public/favicon.png` con la imagen del nuevo curso.
+
+### Descargas generadas
+
+```text
+public/descargas/openclass-iot.pdf
+public/descargas/openclass-iot.pptx
+public/descargas/iot_semana1.pdf
+public/descargas/iot_semana1.pptx
+```
+
+### Enlazar descargas desde el portal
+
+```html
+<a href="./descargas/iot_semana1.pdf" download>Descargar PDF</a>
+<a href="./descargas/iot_semana1.pptx" download>Descargar PPTX</a>
+```
+
+### Enlazar semanas desde el portal
+
+```html
+<a href="./semanas/iot_semana1/#/1" target="_self">Semana 1</a>
+```
+
+---
+
+## Notas del presentador
+
+Se escriben como comentarios HTML dentro de cada diapositiva:
+
+```md
+---
+layout: slide-08-titulo-texto
+---
+
+::title::
+Título
+
+::content::
+Contenido visible.
+
+<!--
+Notas del presentador:
+Explicar el concepto con un ejemplo del mundo real.
+-->
+```
+
+Al construir el sitio se usa `--without-notes`, así que las notas **no quedan visibles** en la web. Sin embargo, al exportar PPTX pueden quedar incrustadas en el archivo — revisarlo antes de compartirlo.
+
+---
+
+## Publicacion en GitHub Pages
+
+### Primer despliegue
+
+En GitHub ir a:
+
+```text
 Settings → Pages → Build and deployment → Source: GitHub Actions
 ```
 
----
+### Despliegue automatico
 
-## 16. Base del sitio
+Cada `git push` a `main` activa el workflow `.github/workflows/deploy.yml`, que:
 
-En local, el sitio funciona con base:
+1. Instala dependencias (`npm ci`).
+2. Instala Chromium para exportar.
+3. Exporta PDF y PPTX (`npm run export:downloads`).
+4. Construye el sitio con la base correcta (`npm run build:all`).
+5. Publica en GitHub Pages.
 
-```txt
-/
-```
+### Base del sitio
 
-En GitHub Pages, si el repositorio se llama:
+En local la base es `/`. En GitHub Pages es `/<nombre-del-repositorio>/`.
 
-```txt
-iot-uniminuto
-```
-
-la base pública normalmente será:
-
-```txt
-/iot-uniminuto/
-```
-
-Por eso `scripts/build-site.mjs` debe leer la variable:
-
-```txt
-SITE_BASE
-```
-
-En GitHub Actions se define así:
+El workflow la define automáticamente:
 
 ```yaml
 env:
   SITE_BASE: /${{ github.event.repository.name }}/
 ```
 
-Si el proyecto se publica con dominio personalizado, se puede cambiar a:
+Si el repositorio usa dominio personalizado, cambiar a:
 
 ```yaml
 env:
@@ -760,317 +545,192 @@ env:
 
 ---
 
-## 17. Reglas de contenido Open Class
+## Plantilla para nuevos cursos
 
-Cada presentación semanal debe responder a una sesión de 90 minutos.
+`openclass-template.zip` contiene la estructura completa con placeholders genéricos. Permite crear un nuevo curso desde cero sin tocar el repositorio IoT.
 
-Debe incluir:
+### Crear un curso nuevo
 
-1. Portada.
-2. Título de la sesión.
-3. Objetivos de aprendizaje.
-4. Ruta de trabajo.
-5. Desarrollo conceptual.
-6. Ejemplos aplicados.
-7. Actividad didáctica breve.
-8. Actividad práctica.
-9. Producto esperado.
-10. Preguntas de análisis.
-11. Socialización.
-12. Resolución de dudas.
-13. Cierre académico.
-14. Recordatorio institucional.
-15. Diapositiva final.
+1. Descomprimir `openclass-template.zip` en una carpeta nueva.
+1. Abrir terminal en esa carpeta.
+1. Instalar dependencias: `npm install`
+1. Ejecutar el asistente de configuración: `npm run nuevo`
 
----
+### Que pide el asistente
 
-## 18. Criterios Open Class
+```text
+Nombre corto del curso (ej: iot, bd, redes): bd
+Nombre completo del curso: Bases de Datos
+Número de semanas [8]: 4
+Año [2026]: 2026
 
-Cada semana debe procurar cumplir:
+¿Configurar tema y fecha de cada semana ahora? [S]:
 
-1. Tolerancia máxima de 5 minutos.
-2. Desarrollo suficiente de la temática.
-3. Presentación diferente al aula virtual.
-4. Actividad didáctica breve, máximo 20 minutos.
-5. Duración efectiva total de 90 minutos.
-6. Resolución de dudas en máximo 15 minutos.
-7. Recordatorio de Encuesta de Percepción Estudiantil.
+── Semana 1 ───────────────────────────────
+  Tema de la semana: Introducción al modelo relacional
+  Fecha de la clase [2026]: Enero 27 de 2026
 
----
-
-## 19. Notas del presentador
-
-Cada diapositiva puede incluir notas del presentador en comentarios HTML:
-
-```md
-<!--
-Notas del presentador:
-Explicar el concepto con un ejemplo cercano al contexto profesional de los estudiantes.
--->
+── Semana 2 ───────────────────────────────
+  Tema de la semana: Álgebra relacional
+  Fecha de la clase [2026]: Febrero 3 de 2026
+...
 ```
 
-Para la publicación web se usa:
+### Que hace el asistente automaticamente
 
-```txt
---without-notes
+- Renombra `CURSO_semanaN.md` → `bd_semanaN.md` (lanzadores y contenido).
+- Rellena la portada de cada semana con el tema y la fecha indicados.
+- Actualiza `slides.md`, `package.json`, `scripts/decks.mjs` y `.github/workflows/deploy.yml`.
+- Ejecuta `npm install`.
+
+Si se responde `N` a la configuración de semanas, los placeholders `TEMA_SEMANA` y `FECHA_SEMANA` quedan en los archivos para rellenar manualmente.
+
+### Proximos pasos tras el asistente
+
+```powershell
+git init
+git add -A
+git commit -m "Inicio curso Bases de Datos"
+npm run dev:s1
 ```
 
-Esto evita que las notas queden incluidas en el sitio construido.
+### Regenerar la plantilla
 
-Antes de publicar archivos PPTX, revisar manualmente si las notas quedaron incorporadas en el archivo exportado.
+Si se hacen cambios en el tema, layouts o scripts y se quiere actualizar `openclass-template.zip`:
+
+```powershell
+npm run zip:template
+```
 
 ---
 
-## 20. Problemas frecuentes
+## Solucion de problemas
 
 ### Aparece una diapositiva blanca al inicio
 
-Causas probables:
+Causas comunes:
 
-- El bloque global quedó separado de la portada.
-- El archivo interno de semana incluye configuración global.
-- El lanzador raíz tiene contenido adicional.
+- El archivo `semanas/iot_semanaN.md` incluye configuración global (`theme:`, `title:`, etc.).
+- El lanzador `iot_semanaN.md` tiene diapositivas adicionales además del `src:`.
+- El bloque de configuración de `slides.md` está separado de la portada.
 
 Solución:
 
-- En `slides.md`, poner `layout: slide-01-portada` dentro del primer bloque.
-- En `iot_semanaN.md`, usar únicamente el bloque con `src`.
-- En `semanas/iot_semanaN.md`, iniciar directamente con `layout`.
+- `semanas/iot_semanaN.md` debe empezar directamente con `layout:`, sin bloque global.
+- `iot_semanaN.md` solo debe tener el bloque con `src:`.
 
 ---
 
 ### Error de layout desconocido
 
-Mensaje posible:
-
-```txt
+```text
 Unknown layout "slide-08-objetivos"
 ```
 
-Solución:
+Los nombres son exactos. Consultar la sección [Layouts disponibles](#layouts-disponibles).
 
-```txt
-slide-08-titulo-texto
-slide-09-objetivos
-```
+---
+
+### El codigo en la diapositiva se corta y no hace scroll
+
+Usar el layout dedicado `slide-codigo` en lugar de `slide-08-titulo-texto`. Ver [Bloques de codigo](#bloques-de-codigo).
 
 ---
 
 ### Error al exportar PDF o PPTX
 
-Probar primero la semana individual:
+Probar primero la semana individualmente:
 
 ```powershell
-npm run edit:s2
+npm run dev:s2
 ```
 
-Luego exportarla sola:
+Si no renderiza bien en dev, no exportará bien. Corregir el problema antes de ejecutar:
 
 ```powershell
 npx slidev export iot_semana2.md --format pdf --timeout 120000 --wait 3000 --wait-until none --output public/descargas/iot_semana2.pdf
 ```
 
-Si falla, revisar esa semana antes de activarla en `scripts/decks.mjs`.
+---
 
-Mientras se corrige, dejarla así:
+### Los enlaces funcionan en local pero no en GitHub Pages
 
-```js
-enabled: false,
-exportable: false
-```
+Verificar:
+
+1. Que `SITE_BASE` esté definido en el workflow.
+2. Que los enlaces del portal sean relativos (`./semanas/...`, no `/semanas/...`).
+3. Que el sitio esté publicado mediante GitHub Actions, no desde una rama.
 
 ---
 
 ### El despliegue falla en GitHub Actions
 
-Revisar el paso exacto que falló:
+Revisar el paso exacto en `Actions → Build Slidev site`. Los más propensos a fallar:
 
-```txt
-Actions → Build Slidev site
-```
-
-Pasos comunes donde puede fallar:
-
-```txt
-npm ci
-npx playwright install chromium --with-deps
-npm run export:downloads
-npm run build:all
-```
-
-Si falla en `export:downloads`, probablemente una semana activa no está renderizando bien.
+- `npm ci` — dependencias desactualizadas o `package-lock.json` inconsistente.
+- `export:downloads` — una semana activa no renderiza bien.
+- `build:all` — un layout o slot inexistente.
 
 ---
 
-### Los enlaces funcionan localmente, pero no en GitHub Pages
+### El texto no cabe en la franja blanca
 
-Revisar:
+Los layouts usan `AutoFitText`, que reduce el tamaño de fuente automáticamente hasta el mínimo configurado. Si el texto aún no cabe:
 
-1. Que `SITE_BASE` esté configurado.
-2. Que los enlaces del portal sean relativos.
-3. Que no se usen rutas absolutas como `/descargas/...` en el portal.
-4. Que el sitio esté publicado desde GitHub Actions.
-
----
-
-## 21. `.gitignore` recomendado
-
-```gitignore
-node_modules/
-dist/
-.slidev/
-node_modules/.vite/
-.DS_Store
-*.log
-.env
-```
-
-La carpeta `public/descargas/` puede generarse automáticamente. No es necesario editar manualmente `dist/`.
+- Dividir el contenido en dos diapositivas.
+- Usar un layout de dos columnas.
+- Reducir la cantidad de texto.
 
 ---
 
-## 22. Flujo de trabajo recomendado
+## Reglas y buenas practicas
 
-### Crear o editar una semana
-
-Editar:
-
-```txt
-semanas/iot_semanaN.md
-```
-
-### Probar una semana
-
-```powershell
-npm run edit:sN
-```
-
-Ejemplo:
-
-```powershell
-npm run edit:s1
-```
-
-### Activar la semana
-
-Editar:
-
-```txt
-scripts/decks.mjs
-```
-
-Cambiar:
-
-```js
-enabled: true,
-exportable: true
-```
-
-### Ver todo localmente
-
-```powershell
-npm run dev
-```
-
-### Subir cambios
-
-```powershell
-git add .
-git commit -m "Actualizar presentación Semana N"
-git push origin main
-```
-
-GitHub Actions publicará el sitio automáticamente.
-
----
-
-## 23. Reglas finales
+### Archivos Markdown
 
 - No editar `dist/` manualmente.
 - No compilar directamente archivos dentro de `semanas/`.
-- No poner configuración global dentro de `semanas/iot_semanaN.md`.
+- No poner configuración global (`theme:`, `title:`, etc.) dentro de `semanas/iot_semanaN.md`.
+- No enlazar archivos `.md` ni `index.html` directamente desde el portal.
+
+### Slots
+
 - No cerrar slots con `::`.
-- No usar layouts inexistentes.
-- No usar rutas relativas hacia `../public`.
-- No enlazar archivos `.md` desde el portal.
-- No enlazar `index.html` desde el portal.
-- Exportar desde los lanzadores raíz.
-- Activar solo las semanas listas.
-- Revisar los PPTX antes de publicarlos.
-- Mantener la plantilla institucional dentro de `theme/uniminuto`.
+- No usar layouts que no existen.
+
+### Rutas
+
+- Usar siempre rutas absolutas desde `/` para recursos en `public/`.
+- Usar rutas relativas (`./semanas/...`) para los enlaces entre presentaciones en el portal.
+
+### Codigo
+
+- Usar `layout: slide-codigo` para diapositivas con bloques de código extenso.
+- Agregar `{lines:true}` al bloque de código para mostrar numeración de líneas.
+
+### Publicacion
+
+- Activar solo las semanas con contenido revisado en `scripts/decks.mjs`.
+- Revisar los PPTX antes de compartirlos (pueden contener notas del presentador).
 
 ---
 
-## 24. Archivos complementarios sugeridos
+## Referencia rapida de comandos
 
-Para mantener el README más limpio, se recomienda mover los prompts a:
+```text
+Editar semana N:         npm run dev:sN
+Todo en paralelo:        npm run dev:todo
+Ver resultado completo:  npm run vista
+Publicar en GitHub:      npm run publicar
 
-```txt
-docs/prompts.md
+Construir todo:          npm run build:all
+Construir solo nuevo:    npm run build:incremental
+Exportar todo:           npm run export:downloads
+Exportar solo nuevo:     npm run export:incremental
+
+Limpiar dist:            npm run clean
+Limpiar descargas:       npm run clean:downloads
+Limpiar caché:           npm run clean:cache
+
+Configurar nuevo curso:  npm run nuevo
+Regenerar plantilla:     npm run zip:template
 ```
-
-Contenido sugerido:
-
-```txt
-- Prompt maestro para generar una semana.
-- Prompt maestro para actualizar slides.md.
-- Prompt corto para corregir formato Slidev.
-- Reglas de slots.
-- Reglas de notas del presentador.
-```
-
-El README debe explicar cómo operar el proyecto. Los prompts pueden mantenerse como documentación complementaria.
-
----
-
-## 25. Resumen operativo
-
-```txt
-Portal:
-slides.md
-
-Lanzadores:
-iot_semana1.md ... iot_semana8.md
-
-Contenido real:
-semanas/iot_semana1.md ... semanas/iot_semana8.md
-
-Control de publicación:
-scripts/decks.mjs
-
-Recursos:
-public/
-
-Plantilla:
-theme/uniminuto/
-
-Ver todo:
-npm run dev
-
-Editar semana:
-npm run edit:s1
-
-Construir:
-npm run build:all
-
-Exportar:
-npm run export:downloads
-
-Publicar:
-GitHub Pages con GitHub Actions
-```
-
----
-
-## 26. Estado del proyecto
-
-El proyecto queda preparado para mantener presentaciones Open Class semanales con Slidev, una plantilla institucional estable, exportaciones descargables y despliegue progresivo en GitHub Pages.
-
-La arquitectura permite:
-
-- Crear nuevas semanas con rapidez.
-- Probar cada presentación por separado.
-- Construir el sitio completo.
-- Exportar PDF y PPTX.
-- Publicar solo las semanas listas.
-- Evitar que una semana incompleta detenga todo el despliegue.

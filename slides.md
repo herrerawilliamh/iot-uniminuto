@@ -1,6 +1,8 @@
 ---
 theme: ./theme/uniminuto
 title: Internet de las cosas — Open Class
+favicon: /favicon.png
+codeCopy: true
 transition: fade
 routerMode: hash
 drawings:

@@ -27,7 +27,14 @@
     "build:s7": "slidev build iot_semana7.md --out dist/semanas/iot_semana7 --base /semanas/iot_semana7/ --without-notes",
     "build:s8": "slidev build iot_semana8.md --out dist/semanas/iot_semana8 --base /semanas/iot_semana8/ --without-notes",
     "build:all": "node scripts/build-site.mjs",
+    "build:incremental": "node scripts/build-incremental.mjs",
     "export:downloads": "node scripts/export-downloads.mjs",
+    "export:incremental": "node scripts/export-incremental.mjs",
+    "vista": "npm run clean && npm run export:downloads && npm run build:all && http-server dist -p 4173 -c-1 -o",
+    "publicar": "node scripts/publicar.mjs",
+    "dev:todo": "node scripts/dev-all.mjs",
+    "nuevo": "node scripts/nuevo-curso.mjs",
+    "zip:template": "node scripts/zip-template.mjs",
     "preview:static": "npm run build:all && http-server dist -p 4173 -c-1",
     "preview:pages": "npm run export:downloads && npm run build:all && http-server dist -p 4173 -c-1"
   },
@@ -41,6 +48,7 @@
   "devDependencies": {
     "@slidev/cli": "^52.15.0",
     "@slidev/theme-default": "^0.25.0",
+    "concurrently": "^9.2.1",
     "http-server": "^14.1.1",
     "playwright-chromium": "^1.59.1",
     "vite": "^7.1.12"

@@ -670,23 +670,19 @@ Conexiones sugeridas
 Realizar las conexiones de la siguiente manera:
 
 **DHT22**
-
 - VCC → 3V3 del ESP32.
 - GND → GND del ESP32.
 - SDA/DATA → GPIO 15 del ESP32.
 
 **LED verde**
-
 - Ánodo → GPIO 18.
 - Cátodo → resistencia de 220 Ω → GND.
 
 **LED amarillo**
-
 - Ánodo → GPIO 19.
 - Cátodo → resistencia de 220 Ω → GND.
 
 **LED rojo**
-
 - Ánodo → GPIO 21.
 - Cátodo → resistencia de 220 Ω → GND.
 
@@ -696,14 +692,14 @@ Orientar a los estudiantes en el cableado dentro de Wokwi. Recordar que los LEDs
 -->
 
 ---
-layout: slide-08-titulo-texto
+layout: slide-codigo
 ---
 
 ::title::
 Código completo en MicroPython
 
 ::content::
-```python
+```python {lines:true}
 # Nodo IoT local con ESP32, DHT22 y LEDs||
 # Semana 2 - Internet de las cosas
 # Simulación en Wokwi con MicroPython

@@ -90,9 +90,9 @@ import AutoFitText from '../components/AutoFitText.vue'
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: 21%;
+  top: 18%;
   width: 42%;
-  height: 45%;
+  height: 57%;
   color: #233763 !important;
   font-family: var(--font-body, 'Atkinson Hyperlegible', Arial, sans-serif);
 }

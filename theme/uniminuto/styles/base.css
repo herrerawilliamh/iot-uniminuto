@@ -12,7 +12,7 @@
 .codigo-slide pre,
 .codigo-slide pre.slidev-code,
 .codigo-slide .slidev-code {
-    max-height: 430px !important;
+    max-height: 340px !important;
     overflow: auto !important;
 
     background: #0f172a !important;
