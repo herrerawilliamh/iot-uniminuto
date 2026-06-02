@@ -744,28 +744,47 @@ Archivo `diagram.json` sugerido
 
 ::content::
 
-```json
+```json {lines:true}
 {
   "version": 1,
-  "author": "Open Class IoT",
+  "author": "Uri Shaked",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
-    { "type": "wokwi-dht22", "id": "dht1", "top": -120, "left": 260, "attrs": {} },
-    { "type": "wokwi-led", "id": "led1", "top": 100, "left": 280, "attrs": { "color": "red" } },
-    { "type": "wokwi-resistor", "id": "r1", "top": 160, "left": 220, "attrs": { "value": "220" } }
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 14.3,
+      "left": -5,
+      "attrs": { "env": "micropython-20220618-v1.19.1" }
+    },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -38.1, "left": 167.4, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 119.15,
+      "left": 230.4,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 82.8,
+      "left": 301.8,
+      "attrs": { "color": "red", "flip": "1" }
+    }
   ],
   "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
     [ "dht1:VCC", "esp:3V3", "red", [ "v0" ] ],
-    [ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ],
     [ "dht1:SDA", "esp:D15", "green", [ "v0" ] ],
-    [ "esp:D21", "r1:1", "orange", [ "v0" ] ],
-    [ "r1:2", "led1:A", "orange", [ "v0" ] ],
-    [ "led1:C", "esp:GND.2", "black", [ "v0" ] ]
+    [ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "esp:D21", "r1:1", "orange", [ "h18.9", "v47.6" ] ],
+    [ "r1:2", "led1:A", "green", [ "v0" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "v0" ] ]
   ],
   "dependencies": {}
 }
-```
 
 <!--
 Notas del presentador:

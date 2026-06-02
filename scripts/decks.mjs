@@ -54,5 +54,12 @@ function normalizeBase(value) {
       base: withBase("semanas/iot_semana4/"),
       exportable: true,
     },
+    {
+      name: "iot_semana5",
+      entry: "iot_semana5.md",
+      out: "dist/semanas/iot_semana5",
+      base: withBase("semanas/iot_semana5/"),
+      exportable: true,
+    },
     // Activa cada semana aquí cuando el contenido esté listo.
   ];
