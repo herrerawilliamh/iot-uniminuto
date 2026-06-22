@@ -299,5 +299,70 @@ Preguntas orientadoras
 * ¿Qué aprendizaje se transfiere a un contexto profesional?
 
 ---
+layout: slide-08-titulo-texto
+---
+
+::title::
+Plantilla para Listas y revelado progresivo
+
+::content::
+<p v-click><strong>Lista no ordenada:</strong></p>
+
+<ul>
+  <li v-click>Puede escribirse con asterisco, guion o HTML.</li>
+  <li v-click>Funciona bien para ideas, criterios y recomendaciones.</li>
+</ul>
+
+<p v-click><strong>Lista ordenada:</strong></p>
+
+<ol>
+  <li v-click>Primer paso.</li>
+  <li v-click>Segundo paso.</li>
+  <li v-click>Tercer paso.</li>
+</ol>
+
+<p v-click><strong>Lista alfabética:</strong></p>
+
+<ol type="A">
+  <li v-click>Primer criterio.</li>
+  <li v-click>Segundo criterio.</li>
+  <li v-click>Tercer criterio.</li>
+</ol>
+
+---
+layout: slide-11-dos-titulos-dos-columnas
+---
+
+::leftTitle::
+<span v-click>Plantilla Animación Antes del análisis</span>
+
+::rightTitle::
+<span v-click>Plantilla Animación Después del análisis</span>
+
+::left::
+<p v-click>En esta columna puedes describir la situación inicial, las ideas previas, los datos disponibles o las condiciones del problema.</p>
+
+<p v-click><strong>Ejemplo:</strong></p>
+
+<ul>
+  <li v-click>Información dispersa.</li>
+  <li v-click>Criterios poco claros.</li>
+  <li v-click>Necesidad de priorización.</li>
+  <li v-click>Dudas frente a la toma de decisiones.</li>
+</ul>
+
+::right::
+<p v-click>En esta columna puedes mostrar el resultado esperado después del análisis.</p>
+
+<p v-click><strong>Ejemplo:</strong></p>
+
+<ul>
+  <li v-click>Criterios definidos.</li>
+  <li v-click>Decisiones justificadas.</li>
+  <li v-click>Evidencias organizadas.</li>
+  <li v-click>Conclusiones argumentadas.</li>
+</ul>
+
+---
 layout: slide-12-cierre
 ---
