@@ -49,3 +49,4 @@ import AutoFitText from '../components/AutoFitText.vue'
 .objetivos-fit :deep(li) { margin-bottom: 0.8rem; }
 </style>
 
+

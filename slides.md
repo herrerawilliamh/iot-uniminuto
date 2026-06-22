@@ -92,6 +92,12 @@ Presentaciones disponibles
 
 <a href="./descargas/iot_semana7.pdf" download>Descargar PDF</a> · <a href="./descargas/iot_semana7.pptx" download>Descargar PPTX</a>
 
+### **Semana 8**
+
+<a href="./semanas/iot_semana8/#/1" target="_self">Tendencias y futuro de IoT</a>
+
+<a href="./descargas/iot_semana8.pdf" download>Descargar PDF</a> · <a href="./descargas/iot_semana8.pptx" download>Descargar PPTX</a>
+
 ---
 layout: slide-12-cierre
 ---

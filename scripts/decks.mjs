@@ -75,6 +75,13 @@ export const decks = [
     base: withBase("semanas/iot_semana7/"),
     exportable: true,
   },
+  {
+    name: "iot_semana8",
+    entry: "iot_semana8.md",
+    out: "dist/semanas/iot_semana8",
+    base: withBase("semanas/iot_semana8/"),
+    exportable: true,
+  },
 ];
 
 export default decks;
