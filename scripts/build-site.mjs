@@ -29,3 +29,5 @@ for (const deck of decks) {
     "--without-notes",
   ]);
 }
+fs.writeFileSync("dist/.nojekyll", "", "utf-8");
+console.log("\n✓ dist/.nojekyll creado para GitHub Pages.\n");

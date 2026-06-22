@@ -1,4 +1,4 @@
-name: Deploy Slidev to GitHub Pages
+name: Deploy Open Class to GitHub Pages
 
 on:
   push:
@@ -13,39 +13,40 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
-    name: Build Slidev site
+    name: Build Open Class
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v6
+    env:
+      SITE_BASE: /${{ github.event.repository.name }}/
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v6
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Instalar dependencias
+      - name: Install dependencies
         run: npm ci
 
-      - name: Instalar Chromium para exportar
+      - name: Install Chromium for Slidev export
         run: npx playwright install chromium --with-deps
 
-      - name: Exportar PDF y PPTX
-        run: npm run export:downloads
-        
-      - name: Construir portal y semanas
-        run: npm run build:all
-        env:
-          SITE_BASE: /iot-uniminuto/
+      - name: Generate, export and build Open Class
+        run: npm run pages:build
 
-      - name: Subir artefacto de GitHub Pages
-        uses: actions/upload-pages-artifact@v5
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
@@ -58,6 +59,6 @@ jobs:
     needs: build
 
     steps:
-      - name: Publicar en GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

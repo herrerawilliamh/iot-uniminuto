@@ -1,0 +1,86 @@
+{
+  "course": {
+    "shortName": "iot",
+    "fullName": "Internet de las Cosas",
+    "year": "2026",
+    "description": "Curso orientado al análisis, diseño, programación e integración de sistemas de Internet de las Cosas, abordando fundamentos tecnológicos, dispositivos, sensores, conectividad, seguridad, aplicaciones inteligentes y tendencias como IoT industrial, edge computing e inteligencia artificial aplicada.",
+    "openClassLabel": "Open Class"
+  },
+  "generation": {
+    "weeksTotal": 8,
+    "activeWeeks": [1, 2, 3, 4, 5, 6, 7],
+    "overwriteLaunchers": true,
+    "overwritePortal": true,
+    "overwriteDecks": true,
+    "overwritePackageScripts": true,
+    "overwriteWeekContent": false,
+    "exportPortal": false
+  },
+  "weeks": [
+    {
+      "number": 1,
+      "title": "Introducción a IoT y fundamentos tecnológicos",
+      "date": "2026",
+      "centralTheme": "Generalidades de Internet de las Cosas, estructuras tecnológicas que soportan IoT y riesgos de seguridad asociados a sistemas conectados.",
+      "activity": "Reconocimiento de componentes, actores y escenarios de aplicación de IoT.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 2,
+      "title": "Arquitectura física de sistemas IoT",
+      "date": "2026",
+      "centralTheme": "Dispositivos, sensores, actuadores, microcontroladores, módulos de comunicación y arquitectura básica de un sistema IoT.",
+      "activity": "Análisis de arquitectura física y flujo de datos en una solución IoT.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 3,
+      "title": "Programación de sistemas IoT",
+      "date": "2026",
+      "centralTheme": "Programación de dispositivos IoT, lectura de sensores, control de actuadores y lógica básica de interacción con el entorno.",
+      "activity": "Práctica guiada de programación de un prototipo IoT.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 4,
+      "title": "MicroPython, ESP32 y simulación con Wokwi",
+      "date": "2026",
+      "centralTheme": "Uso de ESP32, MicroPython y entornos de simulación para construir prototipos IoT funcionales.",
+      "activity": "Implementación de una simulación con sensores y salidas digitales.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 5,
+      "title": "Conectividad IoT: BLE, Wi-Fi, MQTT y HTTP",
+      "date": "2026",
+      "centralTheme": "Protocolos y tecnologías de comunicación para conectar dispositivos IoT con aplicaciones, servicios y plataformas.",
+      "activity": "Comparación de tecnologías de comunicación y selección según el caso de uso.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 6,
+      "title": "IoT en la nube y visualización de datos",
+      "date": "2026",
+      "centralTheme": "Integración de dispositivos IoT con servicios cloud, dashboards, almacenamiento de datos y monitoreo remoto.",
+      "activity": "Diseño de un flujo de datos desde el dispositivo hasta un tablero de visualización.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 7,
+      "title": "Integración IoT e inteligencia artificial",
+      "date": "Junio 15 de 2026",
+      "centralTheme": "Aplicación de inteligencia artificial, aprendizaje automático, TinyML y edge computing en sistemas IoT inteligentes.",
+      "activity": "Análisis de un caso de uso IoT con procesamiento inteligente en el borde.",
+      "duration": "90 minutos"
+    },
+    {
+      "number": 8,
+      "title": "Tendencias y futuro de IoT",
+      "date": "2026",
+      "centralTheme": "Internet Industrial de las Cosas, inteligencia artificial, aprendizaje automático, impactos del entorno y tendencias futuras de IoT.",
+      "activity": "Actividad de cierre sobre oportunidades, riesgos y proyección profesional de IoT.",
+      "duration": "90 minutos",
+      "status": "draft"
+    }
+  ]
+}
