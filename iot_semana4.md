@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: Internet de las Cosas — Semana 4 — MicroPython, ESP32 y simulación con Wokwi
+title: >-
+  Internet de las Cosas — Semana 4 — MicroPython, ESP32 y simulación con Wokwi
 favicon: /favicon.png
 codeCopy: true
 transition: fade

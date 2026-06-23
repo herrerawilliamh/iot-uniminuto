@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: Internet de las Cosas — Semana 7 — Integración IoT e inteligencia artificial
+title: >-
+  Internet de las Cosas — Semana 7 — Integración IoT e inteligencia artificial
 favicon: /favicon.png
 codeCopy: true
 transition: fade

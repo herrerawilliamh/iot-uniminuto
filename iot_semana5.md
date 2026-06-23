@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: Internet de las Cosas — Semana 5 — Conectividad IoT: BLE, Wi-Fi, MQTT y HTTP
+title: >-
+  Internet de las Cosas — Semana 5 — Conectividad IoT: BLE, Wi-Fi, MQTT y HTTP
 favicon: /favicon.png
 codeCopy: true
 transition: fade

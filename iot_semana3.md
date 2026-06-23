@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: Internet de las Cosas — Semana 3 — Programación de sistemas IoT
+title: >-
+  Internet de las Cosas — Semana 3 — Programación de sistemas IoT
 favicon: /favicon.png
 codeCopy: true
 transition: fade

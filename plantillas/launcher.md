@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: {{COURSE_NAME}} — Semana {{WEEK_NUMBER}} — {{WEEK_TITLE}}
+title: >-
+  {{COURSE_NAME}} — Semana {{WEEK_NUMBER}} — {{WEEK_TITLE}}
 favicon: /favicon.png
 codeCopy: true
 transition: fade

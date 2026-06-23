@@ -285,12 +285,10 @@ layout: slide-08-titulo-texto
 ---
 
 ::title::
-Relación con la evaluación de la semana
+Ideas clave para responder:
+
 
 ::content::
-La evaluación se concentra en reconocer beneficios, riesgos y decisiones correctas sobre IoT emergente.
-
-Ideas clave para responder:
 
 1. Blockchain fortalece integridad, trazabilidad y confianza.
 2. IoT en salud favorece monitoreo continuo y personalizado.

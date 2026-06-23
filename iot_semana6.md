@@ -1,6 +1,7 @@
 ---
 theme: ./theme/uniminuto
-title: Internet de las Cosas — Semana 6 — IoT en la nube y visualización de datos
+title: >-
+  Internet de las Cosas — Semana 6 — IoT en la nube y visualización de datos
 favicon: /favicon.png
 codeCopy: true
 transition: fade
