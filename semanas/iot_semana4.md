@@ -1105,3 +1105,4 @@ Ilustración académica sobre seguridad en comunicaciones IoT. Mostrar dispositi
 Prompt:
 Ilustración conceptual de un equipo multidisciplinario trabajando en un proyecto IoT con metodología ágil. Mostrar prototipado rápido, simulación, pruebas, sensores, tablero kanban abstracto, iteración y colaboración. Estilo flat vector moderno, académico, sin texto, sin logotipos, paleta azul, amarillo suave y blanco, formato 16:9.
 -->
+

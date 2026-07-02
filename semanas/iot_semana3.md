@@ -1069,3 +1069,4 @@ Invitar a los estudiantes a llevar esta reflexión a sus contextos. Si en el fut
 
 Finalizar agradeciendo la asistencia, recordando revisar la evaluación de la semana y participar en la Encuesta de Percepción Estudiantil. Cerrar con una frase integradora: un sistema IoT verdaderamente inteligente no solo automatiza procesos; también protege a las personas, los datos y las decisiones que dependen de él.
 -->
+
