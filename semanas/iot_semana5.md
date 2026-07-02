@@ -996,3 +996,4 @@ Diseño de hardware para sistemas IoT
 Notas del presentador:
 Finalizar agradeciendo la participación. Reforzar que el paso siguiente es revisar la actividad o evaluación de la semana con los conceptos trabajados: MEMS, transceptores, bajo consumo, I2C, OTA, antenas, carcasa y CRC. Invitar a los estudiantes a conservar la simulación como evidencia práctica y como punto de partida para futuros prototipos IoT.
 -->
+
