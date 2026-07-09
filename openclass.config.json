@@ -8,7 +8,16 @@
   },
   "generation": {
     "weeksTotal": 8,
-    "activeWeeks": [1, 2, 3, 4, 5, 6, 7, 8],
+    "activeWeeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
     "overwriteLaunchers": true,
     "overwritePortal": true,
     "overwriteDecks": true,
@@ -51,7 +60,7 @@
     },
     {
       "number": 5,
-      "title": "Conectividad IoT: BLE, Wi-Fi, MQTT y HTTP",
+      "title": "Conectividad IoT — BLE, Wi-Fi, MQTT y HTTP",
       "date": "2026",
       "centralTheme": "Protocolos y tecnologías de comunicación para conectar dispositivos IoT con aplicaciones, servicios y plataformas.",
       "activity": "Comparación de tecnologías de comunicación y selección según el caso de uso.",
