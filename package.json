@@ -9,7 +9,7 @@
     "config": "node scripts/generar-desde-config.mjs",
     "semana": "node scripts/semana.mjs",
     "pages:check": "node scripts/preparar-github-pages.mjs",
-    "actualizar:tema": "npm create openclass-uniminuto@1.6.13 . -- --update-theme",
+    "actualizar:tema": "npm create openclass-uniminuto@1.6.12 . -- --update-theme",
     "actualizar:tema:preview": "npm run actualizar:tema && npm run config && npm run dev",
     "dev:s1": "slidev iot_semana1.md --open --port 8601",
     "dev:s2": "slidev iot_semana2.md --open --port 8602",
@@ -43,8 +43,7 @@
     "preview:static": "npm run config && npm run build:all && http-server dist -p 8600 -c-1",
     "preview:pages": "npm run config && npm run export:downloads && npm run build:all && http-server dist -p 8600 -c-1",
     "pages:build": "npm run config && npm run export:downloads && npm run build:all",
-    "pages:preview": "npm run preview:pages",
-    "dev:all": "node scripts/dev-all.mjs"
+    "pages:preview": "npm run preview:pages"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
