@@ -16,7 +16,7 @@ const COLORS = [
   "red.bold",
 ];
 
-const BASE_PORT = 8600;
+const BASE_PORT = 8586;
 
 const weeklyDecks = decks.filter((deck) => deck.entry !== "slides.md");
 
@@ -48,4 +48,3 @@ const child = spawn("concurrently", ["-n", names, "-c", colors, ...commands], {
 child.on("exit", (code) => {
   process.exit(code ?? 0);
 });
-
