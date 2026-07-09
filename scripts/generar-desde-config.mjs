@@ -419,7 +419,7 @@ function buildScripts() {
     config: "node scripts/generar-desde-config.mjs",
     semana: "node scripts/semana.mjs",
     "pages:check": "node scripts/preparar-github-pages.mjs",
-    "actualizar:tema": "npm create openclass-uniminuto@1.6.12 . -- --update-theme",
+    "actualizar:tema": "npm create openclass-uniminuto@1.6.13 . -- --update-theme",
     "actualizar:tema:preview": "npm run actualizar:tema && npm run config && npm run dev",
   };
 
@@ -458,9 +458,9 @@ function buildScripts() {
 
   scripts["preview:static"] = "npm run config && npm run build:all && http-server dist -p 8600 -c-1";
   scripts["preview:pages"] =
-    "npm run config && npm run export:downloads && npm run build:all && http-server dist -p 8600 -c-1";
+    "npm run config && npm run build:all && http-server dist -p 8600 -c-1";
 
-  scripts["pages:build"] = "npm run config && npm run export:downloads && npm run build:all";
+  scripts["pages:build"] = "npm run config && npm run build:all";
   scripts["pages:preview"] = "npm run preview:pages";
 
   return scripts;
